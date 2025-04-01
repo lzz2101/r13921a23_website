@@ -1,68 +1,53 @@
-<!DOCTYPE html>
-<html lang="zh-TW">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>網路攻防lab4</title>
-    <style>
-        /* 設定圖片和留言板的樣式 */
-        img {
-            max-width: 100%;
-            height: auto;
-        }
-        .message-board {
-            border: 1px solid #ddd;
-            padding: 20px;
-            margin-top: 20px;
-        }
-        .message-board textarea {
-            width: 100%;
-            height: 100px;
-            margin-bottom: 10px;
-        }
-    </style>
-</head>
-<body>
-    <h1>歡迎！</h1>
-    <p>我是r13921a23，目前就讀台大資安所。</p>
+import React from "react";
+import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
 
-    <!-- 加入圖片 -->
-    <img src="https://scontent-tpe1-1.xx.fbcdn.net/v/t39.30808-6/453510362_7929691880445017_8718045469063657100_n.jpg?_nc_cat=109&ccb=1-7&_nc_sid=6ee11a&_nc_ohc=WaupSZLPAP8Q7kNvgEvFK96&_nc_oc=AdknjfPFHfVNZje7aTFDE2pfqj1lhOpytFIwynOm8RgEVK8PSh-8rEe7VKGvdir5dOs&_nc_zt=23&_nc_ht=scontent-tpe1-1.xx&_nc_gid=2J-UnSFMh8nOuLW835wn-A&oh=00_AYFd1Vg9fRwlsy3LwfDZMHF7BUCwh4LVncwFwjD1jM__wg&oe=67E7EC20" alt="圖片描述">
+const MainPage = () => (
+  <div>
+    <h1>Website Main Page</h1>
+    <p>Welcome to the main page of our website.</p>
+  </div>
+);
 
-    <!-- 留言板 -->
-    <div class="message-board">
-        <h2>留言板</h2>
-        <form id="messageForm">
-            <textarea id="message" placeholder="請輸入您的留言..."></textarea><br>
-            <button type="submit">送出留言</button>
-        </form>
-        <h3>留言列表</h3>
-        <div id="messages"></div>
-    </div>
+const AboutPage = () => (
+  <div>
+    <h1>Website About Page</h1>
+    <p>Learn more about our website and mission here.</p>
+  </div>
+);
 
-    <!-- 訪問者計數器 -->
-    <p>這個頁面已經有 <span id="visitorCount">0</span> 位訪問者。</p>
+const UserPage = () => (
+  <div>
+    <h1>Website User Page</h1>
+    <p>View user details here.</p>
+  </div>
+);
 
-    <script>
-        // 訪問者計數器
-        let visitorCount = localStorage.getItem('visitorCount') || 0;
-        visitorCount++;
-        localStorage.setItem('visitorCount', visitorCount);
-        document.getElementById('visitorCount').innerText = visitorCount;
+const CreateUserPage = () => (
+  <div>
+    <h1>Website Create User Page</h1>
+    <p>Create a new user in our system.</p>
+  </div>
+);
 
-        // 留言板功能
-        document.getElementById('messageForm').addEventListener('submit', function(event) {
-            event.preventDefault();
-            let message = document.getElementById('message').value;
-            if (message) {
-                let messageList = document.getElementById('messages');
-                let newMessage = document.createElement('p');
-                newMessage.innerText = message;
-                messageList.appendChild(newMessage);
-                document.getElementById('message').value = ''; // 清空留言框
-            }
-        });
-    </script>
-</body>
-</html>
+const App = () => {
+  return (
+    <Router>
+      <nav>
+        <ul>
+          <li><Link to="/">Main</Link></li>
+          <li><Link to="/about">About</Link></li>
+          <li><Link to="/user">User</Link></li>
+          <li><Link to="/create-user">Create User</Link></li>
+        </ul>
+      </nav>
+      <Routes>
+        <Route path="/" element={<MainPage />} />
+        <Route path="/about" element={<AboutPage />} />
+        <Route path="/user" element={<UserPage />} />
+        <Route path="/create-user" element={<CreateUserPage />} />
+      </Routes>
+    </Router>
+  );
+};
 
+export default App;
